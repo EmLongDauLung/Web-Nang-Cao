@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Bootstrap User Management Data Table</title>
+<title>User</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
 <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -30,7 +30,7 @@
     }
 	.table-title {
 		padding-bottom: 15px;
-		background: #299be4;
+		background: #00cb82;
 		color: #fff;
 		padding: 16px 30px;
 		margin: -20px -25px 10px;
@@ -188,7 +188,7 @@ $(document).ready(function(){
                         <h2>User <b>Management</b></h2>
                     </div>
                     <div class="col-xs-7">
-                        <a href="#" class="btn btn-primary"><i class="material-icons">&#xE147;</i> <span>Add New User</span></a>
+                        <a href="./add.php" class="btn btn-primary"><i class="material-icons">&#xE147;</i> <span>Add New User</span></a>
                         <a href="#" class="btn btn-primary"><i class="material-icons">&#xE24D;</i> <span>Export to Excel</span></a>						
                     </div>
                 </div>
