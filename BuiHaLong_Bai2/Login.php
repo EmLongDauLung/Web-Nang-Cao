@@ -1,0 +1,189 @@
+<?php
+session_start();
+require_once("./functions.php");
+
+$username = getValue("username", "POST", "str", "");
+$password = getValue("password", "POST", "str", "");
+$action = getValue("action", "POST", "str", "");
+
+
+var_dump($_POST);
+var_dump($username);
+var_dump($password);
+var_dump($action);
+
+$errorMsg = "";
+
+$Message = $ErrorUname = $ErrorPass = "";
+
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+
+        $username = check_input($_POST["username"]);
+
+        if (!preg_match("/^[a-zA-Z0-9_]*$/", $username)) {
+            $ErrorUname = "Space and special characters not allowed but you can use underscore(_).";
+        } else {
+            $fusername = $username;
+        }
+
+        $fpassword = check_input($_POST["password"]);
+
+        if ($ErrorUname != "") {
+            $Message = "Login failed! Errors found";
+        } else {
+            include("dbConnection.php");
+            $dbConnection = new dbConnection();
+            $conn = $dbConnection->getConnection();
+            $query = mysqli_query($conn, "select * from `users` where name='$fusername' && password='$fpassword'");
+            $num_rows = mysqli_num_rows($query);
+            $row = mysqli_fetch_array($query);
+        }
+    }
+
+    function check_input($data)
+    {
+        $data = trim($data);
+        $data = stripslashes($data);
+        $data = htmlspecialchars($data);
+        return $data;
+    }
+
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="https://fonts.googleapis.com/css?family=Roboto|Courgette|Pacifico:400,700" rel="stylesheet">
+<title>BuiHaLong</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> 
+<style>
+	body {
+		color: #999;
+		background: #e2e2e2;
+		font-family: 'Roboto', sans-serif;
+	}
+	.form-control{
+		min-height: 41px;
+		box-shadow: none;
+		border-color: #e1e1e1;
+	}
+	.form-control:focus{
+		border-color: #00cb82;
+	}	
+    .form-control, .btn{        
+        border-radius: 3px;
+    }
+	.form-header{
+		margin: -30px -30px 20px;
+		padding: 30px 30px 10px;
+		text-align: center;
+		background: #00cb82;
+		border-bottom: 1px solid #eee;
+		color: #fff;
+	}
+	.form-header h2{
+		font-size: 34px;
+		font-weight: bold;
+        margin: 0 0 10px;
+		font-family: 'Pacifico', sans-serif;
+    }
+	.form-header p{
+		margin: 20px 0 15px;
+		font-size: 17px;
+		line-height: normal;
+		font-family: 'Courgette', sans-serif;
+	}
+    .signup-form{
+		width: 390px;
+		margin: 0 auto;	
+		padding: 30px 0;	
+	}
+    .signup-form form{
+		color: #999;
+		border-radius: 3px;
+    	margin-bottom: 15px;
+        background: #f0f0f0;
+        box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+        padding: 30px;
+    }
+	.signup-form .form-group{
+		margin-bottom: 20px;
+	}		
+	.signup-form label{
+		font-weight: normal;
+		font-size: 13px;
+	}
+    .signup-form input[type="checkbox"]{
+		margin-top: 2px;
+	}
+    .signup-form .btn{        
+        font-size: 16px;
+        font-weight: bold;
+		background: #00cb82;
+		border: none;
+		min-width: 200px;
+    }
+	.signup-form .btn:hover, .signup-form .btn:focus{
+		background: #00b073 !important;
+        outline: none;
+	}
+    .signup-form a{
+		color: #00cb82;		
+	}
+    .signup-form a:hover{
+		text-decoration: underline;
+	}
+</style>
+</head>
+<body>
+<div class="signup-form">
+    <form action="" method="POST">
+		<?php
+            if ($action == "login") 
+			{
+                if ($num_rows > 0) {
+                    $_SESSION["logged"] = 1;
+                    header("Location: dashboard.php");
+                } else {
+                    echo ('<span style="color: red;">*Login Fail</span>');
+                }
+            }
+            ?>
+		<div class="form-header">
+			<h2>Sign Up</h2>
+			<p>Fill out this form to start your free trial!</p>
+		</div>
+        <div class="form-group">
+			<label>Username</label>
+        	<input type="text" class="form-control" name="username" required="required">
+        </div>
+        <!-- <div class="form-group">
+			<label>Email Address</label>
+        	<input type="email" class="form-control" name="email" required="required">
+        </div> -->
+		<div class="form-group">
+			<label>Password</label>
+            <input type="password" class="form-control" name="password" required="required">
+        </div>
+		<!-- <div class="form-group">
+			<label>Confirm Password</label>
+            <input type="password" class="form-control" name="confirm_password" required="required">
+        </div>         -->
+        <div class="form-group">
+		<label for="remember-me" class="text-info"><span>Remember me</span> <span><input id="remember-me" name="remember-me" type="checkbox"></span></label><br>
+			<!-- <label class="checkbox-inline"><input type="checkbox" required="required"> I accept the <a href="#">Terms of Use</a> &amp; <a href="#">Privacy Policy</a></label> -->
+		</div>
+		<div class="form-group">
+			<button type="submit" class="btn btn-primary btn-block btn-lg">Sign Up</button>
+		</div>	
+		<input type="hidden" id="action" name="action" value="login" />
+    </form>
+	<div class="text-center small">Already have an account? <a href="#">Login here</a></div>
+</div>
+</body>
+</html>
