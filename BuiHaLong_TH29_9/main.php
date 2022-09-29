@@ -16,7 +16,7 @@
             echo "<div class='item-post'>";
             echo "<img src='./admin/photo/$row[image]' width='30%' height='auto'/> <br>";
             echo "<a href={$row['url']}.html>{$row['title']}</a><br>";
-            $readmore = '<a href="./post/'.$row['url'].'">
+            $readmore = '<a href="'.$row['url'].'">
             Đọc thêm...</a>';
             echo "
              
