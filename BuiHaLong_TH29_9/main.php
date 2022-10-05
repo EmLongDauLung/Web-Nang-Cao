@@ -65,6 +65,7 @@ include "config.php";
                 $content = $row['content'];
                 $shortcontent = substr($content, 0, 160)."...";
                 $link = $row['url'];
+                $img = $row['image'];
             ?>
 
                 <div class="post" id="post_<?php echo $id; ?>">
@@ -76,9 +77,9 @@ include "config.php";
                     echo "<div class='item-post'>";
                     echo "<img src='./admin/photo/$row[image]' width='30%' height='auto'/> <br>";
                     echo "<a href={$row['url']}.html>{$row['title']}</a><br>";
-                    // $readmore = '<a href="'.$row['url'].'">
-                    // Đọc thêm...</a>';
-                    echo "".substr($row['content'], 0 , 160).$readmore."";
+                    $readmore = '<a href="'.$row['url'].'">
+                    Đọc thêm...</a>';
+                    echo "".substr($row['content'], 0 , 150).$readmore."";
                     echo "</div>";
                     ?>
                     <!-- <a href="'.$link.'" target="_blank" class="more">More</a> -->
