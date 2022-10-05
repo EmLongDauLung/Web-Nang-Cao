@@ -1,35 +1,4 @@
-<!-- <div class="row">
-    <div class="col col-sm-9">
-        <div class="main-content">
-            <?php
-            include_once('connect.php');
-            //include_once('articles_seo_friendly.php');
-            include_once('seo_friendly.php');
-            $query = mysqli_query($conn, "SELECT * FROM posts");
-             
-            if(mysqli_num_rows($query) == 0){
-                echo "No articles found";
-            }
-            else{
-            while($row = mysqli_fetch_assoc($query)){
-                
-            echo "<div class='item-post'>";
-            echo "<img src='./admin/photo/$row[image]' width='30%' height='auto'/> <br>";
-            echo "<a href={$row['url']}.html>{$row['title']}</a><br>";
-            $readmore = '<a href="'.$row['url'].'">
-            Đọc thêm...</a>';
-            echo "
-             
-            ".substr($row['content'], 0 , 160).$readmore."
-             
-            ";
-            echo "</div>
-             
-            ";
-            }
-            }
-             
-            ?> -->
+
 <!-- BÀI THỰC HÀNH 5_10 -->
 <?php
 include "config.php";
@@ -76,8 +45,8 @@ include "config.php";
                     echo "<div class='item-post'>";
                     echo "<img src='./admin/photo/$row[image]' width='30%' height='auto'/> <br>";
                     echo "<a href={$row['url']}.html>{$row['title']}</a><br>";
-                    // $readmore = '<a href="'.$row['url'].'">
-                    // Đọc thêm...</a>';
+                    $readmore = '<a href="'.$row['url'].'">
+                    Đọc thêm...</a>';
                     echo "".substr($row['content'], 0 , 160).$readmore."";
                     echo "</div>";
                     ?>
